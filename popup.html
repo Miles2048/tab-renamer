@@ -18,10 +18,16 @@
                 <label for="titleInput">New Tab Title</label>
                 <button id="settingsBtn" title="Settings" class="icon-btn">⚙️</button>
             </div>
-            <div class="input-row">
+            <div class="input-row" style="position: relative;">
+                <div id="emojiBtn" class="emoji-trigger">📁</div>
                 <input type="text" id="titleInput" placeholder="Enter new title..." autofocus>
-                <button id="aiBtn" title="Magic Rename" class="ai-btn">✨ AI</button>
+                <button id="aiBtn" class="ai-btn">✨ AI</button>
+                
+                <div id="emojiPicker" class="emoji-popover hidden">
+                    <!-- Emojis will be injected here -->
+                </div>
             </div>
+        </div>
         </div>
 
         <div id="settingsPanel" class="hidden">

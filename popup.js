@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const titleInput = document.getElementById('titleInput');
+    const emojiBtn = document.getElementById('emojiBtn');
     const applyBtn = document.getElementById('applyBtn');
     const resetBtn = document.getElementById('resetBtn');
     const status = document.getElementById('status');
@@ -13,7 +14,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load existing name if any
     chrome.storage.local.get([tab.url], (result) => {
         if (result[tab.url]) {
-            titleInput.value = result[tab.url];
+            const saved = result[tab.url];
+            // Split emoji and title (Emoji is usually the first character(s))
+            const emojiMatch = saved.match(/^(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])\s*/);
+            if (emojiMatch) {
+                emojiBtn.textContent = emojiMatch[1];
+                titleInput.value = saved.replace(emojiMatch[0], '');
+            } else {
+                titleInput.value = saved;
+            }
             status.textContent = 'Current: Custom';
         }
     });
@@ -35,6 +44,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const apiHelpText = document.getElementById('apiHelpText');
     const aiSuggestions = document.getElementById('aiSuggestions');
     const suggestionsList = document.getElementById('suggestionsList');
+    const emojiPicker = document.getElementById('emojiPicker');
+
+    const EMOJI_LIST = ['📁', '💻', '🚀', '💡', '📅', '📝', '📓', '📊', '🔗', '⚙️', '🛡️', '📦', '🔍', '🎬', '🎮', '🎧', '🎨', '🧪', '🧬', '🌿', '☕', '🍎', '💰', '🔑', '📍', '📌', '✉️', '📥', '📣', '💬'];
     const resetAllBtn = document.getElementById('resetAllBtn');
 
     const PROVIDERS = {
@@ -101,6 +113,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (keys[provider]) apiKeyInput.value = keys[provider];
     });
 
+    // Render Emoji Picker
+    EMOJI_LIST.forEach(emoji => {
+        const span = document.createElement('span');
+        span.className = 'emoji-item';
+        span.textContent = emoji;
+        span.onclick = () => {
+            emojiBtn.textContent = emoji;
+            emojiPicker.classList.add('hidden');
+        };
+        emojiPicker.appendChild(span);
+    });
+
+    emojiBtn.onclick = () => {
+        emojiPicker.classList.toggle('hidden');
+    };
+
+    // Close picker when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!emojiBtn.contains(e.target) && !emojiPicker.contains(e.target)) {
+            emojiPicker.classList.add('hidden');
+        }
+    });
+
     function updateProviderUI(provider) {
         const info = PROVIDERS[provider];
         apiHelpText.innerHTML = `Get one from <a href="${info.url}" target="_blank">${provider.toUpperCase()}</a>`;
@@ -141,7 +176,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         Rules:
         1. NO numbering (do NOT use 1. 2. 3.).
         2. NO prefixes like "- " or ") ".
-        3. Return ONLY the 3 suggestions separated by commas, no other text.
+        3. NO emojis (user will add them manually).
+        4. Return ONLY the 3 suggestions separated by commas, no other text.
 
         Context:
         Title: ${context.title}
@@ -196,8 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const suggestions = await getAISuggestions(response.result);
             if (suggestions && suggestions.length > 0) {
                 // Auto-apply the first one
-                const firstSuggestion = suggestions[0];
-                titleInput.value = firstSuggestion;
+                titleInput.value = suggestions[0];
                 
                 // Still load the list for alternatives
                 suggestionsList.innerHTML = '';
@@ -228,18 +263,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     applyBtn.addEventListener('click', () => {
-        const newTitle = titleInput.value.trim();
-        if (!newTitle) return;
+        const title = titleInput.value.trim();
+        const emoji = emojiBtn.textContent.trim();
+        if (!title && !emoji) return;
 
-        chrome.storage.local.set({ [tab.url]: newTitle }, () => {
+        const fullTitle = emoji ? `${emoji} ${title}`.trim() : title;
+
+        chrome.storage.local.set({ [tab.url]: fullTitle }, () => {
             // Send message to background to re-apply
             chrome.runtime.sendMessage({
                 action: 'rename',
                 tabId: tab.id,
-                newTitle: newTitle,
+                newTitle: fullTitle,
                 url: tab.url
             });
             updateStatus('Renamed!');
+            setTimeout(() => window.close(), 500);
         });
     });
 
@@ -251,6 +290,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 url: tab.url
             });
             titleInput.value = '';
+            emojiBtn.textContent = '📁';
             updateStatus('Reset!');
         });
     });
