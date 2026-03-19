@@ -14,8 +14,36 @@
         </header>
         
         <div class="input-group">
-            <label for="titleInput">New Tab Title</label>
-            <input type="text" id="titleInput" placeholder="Enter new title..." autofocus>
+            <div class="label-row">
+                <label for="titleInput">New Tab Title</label>
+                <button id="settingsBtn" title="Settings" class="icon-btn">⚙️</button>
+            </div>
+            <div class="input-row">
+                <input type="text" id="titleInput" placeholder="Enter new title..." autofocus>
+                <button id="aiBtn" title="Magic Rename" class="ai-btn">✨ AI</button>
+            </div>
+        </div>
+
+        <div id="settingsPanel" class="hidden">
+            <div class="field-group">
+                <label for="providerSelect">AI Provider</label>
+                <select id="providerSelect">
+                    <option value="gemini">Google Gemini</option>
+                    <option value="openai">ChatGPT (OpenAI)</option>
+                    <option value="claude">Claude (Anthropic)</option>
+                    <option value="openrouter">OpenRouter</option>
+                </select>
+            </div>
+            <div class="field-group">
+                <label for="apiKey">API Key</label>
+                <input type="password" id="apiKey" placeholder="Paste your key here...">
+            </div>
+            <p id="apiHelpText" class="help-text">Get one from <a href="https://aistudio.google.com/app/apikey" target="_blank">AISTUDIO</a></p>
+        </div>
+
+        <div id="aiSuggestions" class="hidden">
+            <p class="label-sm">AI Suggestions:</p>
+            <div id="suggestionsList" class="suggestions-list"></div>
         </div>
 
         <div class="button-group">

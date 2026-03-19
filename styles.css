@@ -49,27 +49,90 @@ p {
     color: var(--text-secondary);
 }
 
-.input-group {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 8px;
-    color: var(--text-secondary);
 }
 
-input {
-    width: 100%;
-    padding: 12px 16px;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+.input-row {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.icon-btn:hover {
+    opacity: 1;
+}
+
+.ai-btn {
+    padding: 0 12px;
+    background: var(--primary-gradient);
     color: white;
-    font-size: 14px;
-    transition: all 0.3s ease;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.help-text {
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.help-text a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+#settingsPanel {
+    margin-bottom: 20px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#settingsPanel.hidden, #aiSuggestions.hidden {
+    display: none;
+}
+
+.label-sm {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.suggestions-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.suggestion-chip {
+    padding: 6px 12px;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 16px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.suggestion-chip:hover {
+    background: rgba(56, 189, 248, 0.3);
+    border-color: var(--accent);
 }
 
 input:focus {

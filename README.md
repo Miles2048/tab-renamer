@@ -8,7 +8,10 @@ A premium, lightweight browser extension to personalize and organize your browse
 
 ## ✨ Features
 
+- **✨ AI Magic Rename**: Automatically generate creative and concise titles based on page content using AI (Gemini).
+- **✨ AI 智能重命名**：利用 AI (Gemini) 根据网页内容自动生成创意标题。
 - **🎯 Instant Rename**: Change any tab's title with a single click.
+- **🎯 即时重命名**：一键修改任何标签页的标题。
 - **⌨️ Keyboard Shortcut**: Press `Cmd+Shift+Y` (Mac) or `Ctrl+Shift+Y` (Windows) to instantly open the renamer.
 - **💾 Persistence**: Remembers your custom titles even after page refreshes or browser restarts.
 - **🛡️ Dynamic Lock**: Prevents Single Page Apps (SPAs) and dynamic websites from reverting your custom titles using `MutationObserver`.
