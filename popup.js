@@ -242,15 +242,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                     chip.textContent = s;
                     chip.onclick = () => {
                         titleInput.value = s;
-                        applyBtn.click();
+                        performRename(false); // Clicking alternatives doesn't close yet
                     };
                     suggestionsList.appendChild(chip);
                 });
                 aiSuggestions.classList.remove('hidden');
 
-                // Trigger rename for the first one
-                applyBtn.click();
-                updateStatus('AI Renamed!');
+                // Trigger rename for the first one (DO NOT close)
+                performRename(false);
+                updateStatus('AI Suggested!');
             }
         } finally {
             aiBtn.disabled = false;
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         settingsPanel.classList.toggle('hidden');
     });
 
-    applyBtn.addEventListener('click', () => {
+    const performRename = (shouldClose = false) => {
         const title = titleInput.value.trim();
         const emoji = emojiBtn.textContent.trim();
         if (!title && !emoji) return;
@@ -278,8 +278,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 url: tab.url
             });
             updateStatus('Renamed!');
-            setTimeout(() => window.close(), 500);
+            if (shouldClose) {
+                setTimeout(() => window.close(), 400);
+            }
         });
+    };
+
+    applyBtn.addEventListener('click', () => {
+        performRename(true); // Manual click closes
     });
 
     resetBtn.addEventListener('click', () => {
@@ -309,6 +315,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Enter key support
     titleInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') applyBtn.click();
+        if (e.key === 'Enter') performRename(true); // Enter key closes
     });
 });
