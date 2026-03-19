@@ -26,7 +26,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             status.textContent = 'Current: Custom';
         }
     });
+    const themeSwitch = document.getElementById('themeSwitch');
+    const settingsMain = document.getElementById('settingsMain');
+    const settingsAI = document.getElementById('settingsAI');
+    const aiConfigBtn = document.getElementById('aiConfigBtn');
+    const aiBackBtn = document.getElementById('aiBackBtn');
 
+    // Load Theme
+    chrome.storage.sync.get(['theme'], (result) => {
+        if (result.theme === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+    });
     const updateStatus = (msg, color = '#38bdf8') => {
         status.textContent = msg;
         status.style.color = color;
@@ -135,6 +146,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             emojiPicker.classList.add('hidden');
         }
     });
+
+    // Theme Toggle
+    themeSwitch.onclick = () => {
+        const isDark = document.body.classList.toggle('dark-mode');
+        chrome.storage.sync.set({ theme: isDark ? 'dark' : 'light' });
+    };
+
+    // Settings Navigation
+    aiConfigBtn.onclick = () => {
+        settingsMain.classList.add('hidden');
+        settingsAI.classList.remove('hidden');
+    };
+
+    aiBackBtn.onclick = () => {
+        settingsAI.classList.add('hidden');
+        settingsMain.classList.remove('hidden');
+    };
 
     function updateProviderUI(provider) {
         const info = PROVIDERS[provider];

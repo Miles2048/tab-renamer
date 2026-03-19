@@ -10,59 +10,75 @@
     <div class="container">
         <header>
             <h1>Tab Renamer Pro</h1>
-            <p>Personalize your workspace</p>
+            <p class="subtitle">Personalize your workspace</p>
         </header>
-        
-        <div class="input-group">
-            <div class="label-row">
+
+        <div class="input-section">
+            <div class="field-header">
                 <label for="titleInput">New Tab Title</label>
                 <button id="settingsBtn" title="Settings" class="icon-btn">⚙️</button>
             </div>
-            <div class="input-row" style="position: relative;">
+            
+            <div class="input-group">
                 <div id="emojiBtn" class="emoji-trigger">📁</div>
                 <input type="text" id="titleInput" placeholder="Enter new title..." autofocus>
-                <button id="aiBtn" class="ai-btn">✨ AI</button>
+                <button id="aiBtn" class="ai-btn" title="Magic Suggest">✨</button>
                 
                 <div id="emojiPicker" class="emoji-popover hidden">
                     <!-- Emojis will be injected here -->
                 </div>
             </div>
-        </div>
-        </div>
 
-        <div id="settingsPanel" class="hidden">
-            <div class="field-group">
-                <label for="providerSelect">AI Provider</label>
-                <select id="providerSelect">
-                    <option value="gemini">Google Gemini</option>
-                    <option value="openai">ChatGPT (OpenAI)</option>
-                    <option value="claude">Claude (Anthropic)</option>
-                    <option value="openrouter">OpenRouter</option>
-                </select>
-            </div>
-            <div class="field-group">
-                <label for="apiKey">API Key</label>
-                <input type="password" id="apiKey" placeholder="Paste your key here...">
-            </div>
-            <p id="apiHelpText" class="help-text">Get one from <a href="https://aistudio.google.com/app/apikey" target="_blank">AISTUDIO</a></p>
-            <div class="field-group" style="margin-top: 16px; border-top: 1px solid var(--border); padding-top: 16px;">
-                <button id="resetAllBtn" class="btn-secondary" style="color: var(--danger); border-color: rgba(244, 63, 94, 0.3);">🗑️ Reset All Custom Titles</button>
+            <div id="aiSuggestions" class="suggestions-box hidden">
+                <div id="suggestionsList" class="suggestions-list"></div>
             </div>
         </div>
 
-        <div id="aiSuggestions" class="hidden">
-            <p class="label-sm">AI Suggestions:</p>
-            <div id="suggestionsList" class="suggestions-list"></div>
+        <div id="settingsPanel" class="settings-panel hidden">
+            <!-- Main Settings View -->
+            <div id="settingsMain">
+                <div class="settings-row" id="themeToggleRow">
+                    <span>Dark Mode</span>
+                    <div id="themeSwitch" class="switch"></div>
+                </div>
+                <div class="settings-row" id="aiConfigBtn">
+                    <span>AI Configuration</span>
+                    <span style="color: var(--text-muted); font-size: 12px;">→</span>
+                </div>
+                <div class="settings-row" id="resetAllBtn" style="color: var(--danger); border-bottom: none;">
+                    <span>Reset All Custom Titles</span>
+                </div>
+            </div>
+
+            <!-- AI Settings View -->
+            <div id="settingsAI" class="hidden">
+                <div class="sub-panel-header">
+                    <button id="aiBackBtn" class="back-btn">←</button>
+                    <span style="font-size: 14px; font-weight: 600;">AI Configuration</span>
+                </div>
+                <div class="field-group">
+                    <label>Provider</label>
+                    <select id="providerSelect">
+                        <option value="gemini">Google Gemini</option>
+                        <option value="openai">OpenAI (GPT-4o)</option>
+                        <option value="claude">Anthropic Claude</option>
+                        <option value="openrouter">OpenRouter</option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label>API Key</label>
+                    <input type="password" id="apiKey" placeholder="Enter key...">
+                    <p id="apiHelpText" class="help-text"></p>
+                </div>
+            </div>
         </div>
 
-        <div class="button-group">
-            <button id="applyBtn" class="btn-primary">Apply Rename</button>
-            <button id="resetBtn" class="btn-secondary">Reset Original</button>
-        </div>
+        <section class="actions">
+            <button id="applyBtn" class="primary-action">Apply Rename</button>
+            <button id="resetBtn" class="secondary-action">Reset Original</button>
+        </section>
 
-        <footer>
-            <span id="status">Ready</span>
-        </footer>
+        <footer id="status" class="status-bar">Ready</footer>
     </div>
     <script src="popup.js"></script>
 </body>
