@@ -41,7 +41,7 @@
         if (request.action === 'applyRename') {
             applyTitle(request.title);
             setupObserver();
-        } else if (request.action === 'resetRename') {
+        } else if (request.action === 'reset') {
             resetTitle();
         }
     });

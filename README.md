@@ -1,45 +1,40 @@
-# Tab Renamer Pro
+# Tab Renamer Pro 🚀
 
-A premium, lightweight browser extension to personalize and organize your browser tabs.
+A premium, minimalist browser extension for intelligent tab management. Personalize your workspace with AI-powered suggestions and persistent custom titles.
 
-[中文版](./README_CN.md)
-
-![Icon](icon.svg)
+![Preview](screenshot.png)
 
 ## ✨ Features
 
-- **✨ AI Magic Rename**: Automatically generate creative and concise titles based on page content using AI (Gemini).
-- **✨ AI 智能重命名**：利用 AI (Gemini) 根据网页内容自动生成创意标题。
-- **🎯 Instant Rename**: Change any tab's title with a single click.
-- **🎯 即时重命名**：一键修改任何标签页的标题。
-- **⌨️ Keyboard Shortcut**: Press `Cmd+Shift+Y` (Mac) or `Ctrl+Shift+Y` (Windows) to instantly open the renamer.
-- **💾 Persistence**: Remembers your custom titles even after page refreshes or browser restarts.
-- **🛡️ Dynamic Lock**: Prevents Single Page Apps (SPAs) and dynamic websites from reverting your custom titles using `MutationObserver`.
-- **💎 Premium UI**: A modern, glassmorphic design that matches today's aesthetic standards.
-- **⚡ Lightweight**: Minimal resource usage with Manifest V3 performance.
+- **🤖 Multi-AI Support**: Integrated with Google Gemini, OpenAI GPT-4o, Anthropic Claude, and OpenRouter (DeepSeek/Llama).
+- **🌗 Dual Themes**: Pure Minimalist Light and Deep Dark modes with a persistent toggle.
+- **📁 Emoji Picker**: A curated set of high-quality emojis to organize your tabs visually.
+- **💾 Persistence**: Custom titles stay active even after page refreshes or browser restarts.
+- **⚡ Advanced UX**: 
+  - Smooth "Mobile-App" style sliding navigation for settings.
+  - Auto-close on manual rename completion.
+  - Instant reset to the original page title.
+- **⌨️ Keyboard Shortcut**: Quickly open the renamer with `Cmd/Ctrl + Shift + Y`.
 
 ## 🚀 Installation
 
-1.  **Download/Clone** this repository to your local machine.
-2.  Open your browser (Chrome, Edge, Brave, or any Chromium-based browser).
-3.  Go to the extensions management page: `chrome://extensions`.
-4.  Enable **Developer mode** in the top right corner.
-5.  Click **Load unpacked**.
-6.  Select the `tab renamer` folder.
+1.  Clone this repository or download the ZIP.
+2.  Open Chrome and navigate to `chrome://extensions/`.
+3.  Enable **Developer Mode** in the top right.
+4.  Click **Load unpacked** and select the extension folder.
 
-## 📖 How to Use
+## 🛠️ Configuration
 
-1.  Click the **Tab Renamer Pro** icon in your browser toolbar.
-2.  Type your desired title in the input box.
-3.  Press **Enter** or click **Apply Rename**.
-4.  To go back to the original title, click **Reset Original**.
+1.  Open the extension settings (Cog icon).
+2.  Navigate to **AI Configuration**.
+3.  Select your preferred provider and paste your API Key.
+4.  Your key is stored securely in your browser's local sync storage.
 
-## 🛠️ Built With
+## 🛡️ Privacy & Security
 
-- **HTML5/CSS3**: Custom glassmorphism design system.
-- **JavaScript (ES6+)**: Core logic and DOM manipulation.
-- **Chrome Extension API (MV3)**: For storage and messaging.
+- **Direct Communication**: All AI requests are made directly from your browser to the providers. No middle-man servers.
+- **Local Storage**: API keys and custom titles are stored only in your browser/Google account profile.
 
-## 📄 License
+---
 
-This project is licensed under the MIT License.
+[中文文档 (Chinese)](README_CN.md)

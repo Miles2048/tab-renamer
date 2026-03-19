@@ -278,11 +278,29 @@ button.secondary-action:hover {
     border-color: var(--text-muted);
 }
 
+/* Slider System */
+.slider-viewport {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.slider-track {
+    display: flex;
+    width: 200%; /* Two slides */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide {
+    width: 50%;
+    flex-shrink: 0;
+}
+
 .settings-panel {
     background: var(--input-bg);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 20px;
+    padding: 16px; /* Reduced pdding for slider */
     margin-top: 10px;
     box-shadow: var(--shadow);
 }

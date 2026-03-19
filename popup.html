@@ -35,40 +35,44 @@
         </div>
 
         <div id="settingsPanel" class="settings-panel hidden">
-            <!-- Main Settings View -->
-            <div id="settingsMain">
-                <div class="settings-row" id="themeToggleRow">
-                    <span>Dark Mode</span>
-                    <div id="themeSwitch" class="switch"></div>
-                </div>
-                <div class="settings-row" id="aiConfigBtn">
-                    <span>AI Configuration</span>
-                    <span style="color: var(--text-muted); font-size: 12px;">→</span>
-                </div>
-                <div class="settings-row" id="resetAllBtn" style="color: var(--danger); border-bottom: none;">
-                    <span>Reset All Custom Titles</span>
-                </div>
-            </div>
+            <div class="slider-viewport">
+                <div id="settingsSlider" class="slider-track">
+                    <!-- Main Settings View -->
+                    <div id="settingsMain" class="slide">
+                        <div class="settings-row" id="themeToggleRow">
+                            <span>Dark Mode</span>
+                            <div id="themeSwitch" class="switch"></div>
+                        </div>
+                        <div class="settings-row" id="aiConfigBtn">
+                            <span>AI Configuration</span>
+                            <span style="color: var(--text-muted); font-size: 12px;">→</span>
+                        </div>
+                        <div class="settings-row" id="resetAllBtn" style="color: var(--danger); border-bottom: none;">
+                            <span>Reset All Custom Titles</span>
+                        </div>
+                    </div>
 
-            <!-- AI Settings View -->
-            <div id="settingsAI" class="hidden">
-                <div class="sub-panel-header">
-                    <button id="aiBackBtn" class="back-btn">←</button>
-                    <span style="font-size: 14px; font-weight: 600;">AI Configuration</span>
-                </div>
-                <div class="field-group">
-                    <label>Provider</label>
-                    <select id="providerSelect">
-                        <option value="gemini">Google Gemini</option>
-                        <option value="openai">OpenAI (GPT-4o)</option>
-                        <option value="claude">Anthropic Claude</option>
-                        <option value="openrouter">OpenRouter</option>
-                    </select>
-                </div>
-                <div class="field-group">
-                    <label>API Key</label>
-                    <input type="password" id="apiKey" placeholder="Enter key...">
-                    <p id="apiHelpText" class="help-text"></p>
+                    <!-- AI Settings View -->
+                    <div id="settingsAI" class="slide">
+                        <div class="sub-panel-header">
+                            <button id="aiBackBtn" class="back-btn">←</button>
+                            <span style="font-size: 14px; font-weight: 600;">AI Configuration</span>
+                        </div>
+                        <div class="field-group">
+                            <label>Provider</label>
+                            <select id="providerSelect">
+                                <option value="gemini">Google Gemini</option>
+                                <option value="openai">OpenAI (GPT-4o)</option>
+                                <option value="claude">Anthropic Claude</option>
+                                <option value="openrouter">OpenRouter</option>
+                            </select>
+                        </div>
+                        <div class="field-group">
+                            <label>API Key</label>
+                            <input type="password" id="apiKey" placeholder="Enter key...">
+                            <p id="apiHelpText" class="help-text"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
