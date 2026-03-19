@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const apiHelpText = document.getElementById('apiHelpText');
     const aiSuggestions = document.getElementById('aiSuggestions');
     const suggestionsList = document.getElementById('suggestionsList');
+    const resetAllBtn = document.getElementById('resetAllBtn');
 
     const PROVIDERS = {
         gemini: {
@@ -125,7 +126,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         });
     });
-
     const getAISuggestions = async (context) => {
         const providerId = providerSelect.value;
         const info = PROVIDERS[providerId];
@@ -138,13 +138,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         const prompt = `Based on this webpage context, suggest 3 concise and recognizable tab titles (max 20 characters each). 
+        Rules:
+        1. NO numbering (do NOT use 1. 2. 3.).
+        2. NO prefixes like "- " or ") ".
+        3. Return ONLY the 3 suggestions separated by commas, no other text.
+
         Context:
         Title: ${context.title}
         H1: ${context.h1}
         Description: ${context.description}
-        URL: ${tab.url}
-        
-        Return ONLY the 3 suggestions separated by commas, no other text.`;
+        URL: ${tab.url}`;
 
         try {
             const headers = { 'Content-Type': 'application/json' };
@@ -163,7 +166,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             const data = await response.json();
             const text = info.parse(data);
-            return text.split(',').map(s => s.trim().replace(/^"|"$/g, ''));
+            // Split by comma, then strip leading numbers/symbols and quotes
+            return text.split(',').map(s => s.trim()
+                .replace(/^[\d\.\-\)\s]+/, '') // Strip leading "1. ", "- ", etc.
+                .replace(/^"|"$/g, '')         // Strip quotes
+            );
         } catch (err) {
             console.error('AI Error Details:', err);
             updateStatus(err.message.substring(0, 20) + '...', '#f43f5e');
@@ -187,7 +194,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             const suggestions = await getAISuggestions(response.result);
-            if (suggestions) {
+            if (suggestions && suggestions.length > 0) {
+                // Auto-apply the first one
+                const firstSuggestion = suggestions[0];
+                titleInput.value = firstSuggestion;
+                
+                // Still load the list for alternatives
                 suggestionsList.innerHTML = '';
                 suggestions.forEach(s => {
                     const chip = document.createElement('div');
@@ -200,6 +212,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     suggestionsList.appendChild(chip);
                 });
                 aiSuggestions.classList.remove('hidden');
+
+                // Trigger rename for the first one
+                applyBtn.click();
+                updateStatus('AI Renamed!');
             }
         } finally {
             aiBtn.disabled = false;
@@ -237,6 +253,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             titleInput.value = '';
             updateStatus('Reset!');
         });
+    });
+
+    resetAllBtn.addEventListener('click', () => {
+        if (confirm('Are you sure? This will remove ALL custom titles you have ever set.')) {
+            chrome.storage.local.clear(() => {
+                // Notify ALL tabs to reset via background
+                chrome.runtime.sendMessage({ action: 'resetAll' });
+                titleInput.value = '';
+                updateStatus('All Reset!', '#f43f5e');
+                setTimeout(() => window.close(), 1000); // Close popup after a bit
+            });
+        }
     });
 
     // Enter key support
